@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
+
+import '../model/message.dart';
 
 class TalkRoomPage extends StatefulWidget {
   final String name;
+
   const TalkRoomPage(this.name, {Key? key}) : super(key: key);
 
   @override
@@ -10,12 +14,78 @@ class TalkRoomPage extends StatefulWidget {
 }
 
 class _TalkRoomPageState extends State<TalkRoomPage> {
+  List<Message> messageList = [
+    Message(message: 'あいう', isMe: true, sendTime: DateTime(2022, 1, 1, 12, 0)),
+    Message(message: '柿久', isMe: false, sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(
+        message: '遠すぎる遠すぎる遠遠ｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔ',
+        isMe: false,
+        sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(message: 'あいう', isMe: true, sendTime: DateTime(2022, 1, 1, 12, 0)),
+    Message(message: '柿久', isMe: false, sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(
+        message: '遠すぎる遠すぎる遠遠ｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔ',
+        isMe: false,
+        sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(message: 'あいう', isMe: true, sendTime: DateTime(2022, 1, 1, 12, 0)),
+    Message(message: '柿久', isMe: false, sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(
+        message: '遠すぎる遠すぎる遠遠ｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔ',
+        isMe: false,
+        sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(message: 'あいう', isMe: true, sendTime: DateTime(2022, 1, 1, 12, 0)),
+    Message(message: '柿久', isMe: false, sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(
+        message: '遠すぎる遠すぎる遠遠ｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔ',
+        isMe: false,
+        sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(message: 'あいう', isMe: true, sendTime: DateTime(2022, 1, 1, 12, 0)),
+    Message(message: '柿久', isMe: false, sendTime: DateTime(2022, 1, 1, 13, 12)),
+    Message(
+        message: '遠すぎる遠すぎる遠遠ｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔｔ',
+        isMe: false,
+        sendTime: DateTime(2022, 1, 1, 13, 12)),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlueAccent,
       appBar: AppBar(
         title: Text(widget.name),
       ),
+      body: ListView.builder(
+          physics: const RangeMaintainingScrollPhysics(),
+          shrinkWrap: true,
+          reverse: true,
+          itemCount: messageList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.only(
+                  top: 10.0, left: 10, right: 10, bottom: index == 0 ? 10 : 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                textDirection: messageList[index].isMe
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
+                children: [
+                  Container(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.6),
+                      decoration: BoxDecoration(
+                          color: messageList[index].isMe
+                              ? Colors.green
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      child: Text(messageList[index].message)),
+                  Text(intl.DateFormat('HH:mm')
+                      .format(messageList[index].sendTime))
+                ],
+              ),
+            );
+          }),
     );
   }
 }
